@@ -1,0 +1,21 @@
+public class Mob {
+	public int HP, att, dex, tHP;
+	
+	public Mob(int hp, int a, int d) {
+		HP = 2*hp;
+		tHP = 2*hp;
+		att = a;
+		dex = d;
+	}
+	
+	public void take(int dmg) {
+		if(dmg>dex) {
+			if(dex>=0)
+				HP -= dmg-dex;
+			else
+				HP -= dmg;
+		}
+		if(HP < 0)
+			HP = 0;
+	}
+}
