@@ -1,0 +1,98 @@
+import java.util.Scanner;
+
+public class ClassWriter {
+	private static Scanner s = new Scanner(System.in);
+	private static int l;
+	private static int[] stats = new int[4]; //BAB, fort, ref, will tracker
+	private static int[] improve = new int[4]; //rate at which the saves improve
+	private static int[] lt = {0,0,0,0}; //level tracker, DON'T CHANGE!
+	
+	public static void main(String[] args) {
+		String temp;
+		boolean isMed = false;
+		
+		int maxlevel;
+		System.out.print("Welcome to somebody27else's class writer!"
+					  + "\nMake sure to type carefully, and good luck!"
+					  + "\n========================================"
+					  + "\nHow many levels does your class have?   ");
+		maxlevel = s.nextInt();
+		
+		System.out.print("Slow, medium, or fast BAB progression?   ");
+		temp = s.next();
+		s.nextLine();
+		if(temp.equalsIgnoreCase("slow") || temp.equalsIgnoreCase("s")) {
+			stats[0] = 0;
+			improve[0] = 2;
+		} else if(temp.equalsIgnoreCase("medium") || temp.equalsIgnoreCase("m")) {
+			stats[0] = 0;
+			improve[0] = 1;
+			isMed = true;
+		} else if(temp.equalsIgnoreCase("fast") || temp.equalsIgnoreCase("f")) {
+			stats[0] = 0;
+			improve[0] = 1;
+		}
+		
+		setSave(1,"Fort");
+		setSave(2,"Ref");
+		setSave(3,"Will");
+		
+		System.out.println("\n\nPut in the table tag here!"
+				+ "\n[tr]"
+				+ "\n[th][center]Level[/center][/th]"
+				+ "\n[th][center]BAB[/center][/th]"
+				+ "\n[th][center]Fort[/center][/th]"
+				+ "\n[th][center]Ref[/center][/th]"
+				+ "\n[th][center]Will[/center][/th]"
+				+ "\n[th][center]Special[/center][/th]"
+				+ "\n[tr]\n");
+		
+		String babstr;
+		for(int l=1; l <= maxlevel; l++) {
+			for(int n=0; n<4; n++) {
+				lt[n]++;
+				if(lt[n]==improve[n]) {
+					lt[n] = 0;
+					stats[n]++;
+				}
+			}
+			
+			if((l-2)%3==0 && isMed) {
+				stats[0]--;
+			}
+			
+			babstr="+"+stats[0];
+			
+			if(stats[0]>5)
+				babstr += "/+"+(stats[0]-5);
+			if(stats[0]>10)
+				babstr += "/+"+(stats[0]-10);
+			if(stats[0]>15)
+				babstr += "/+"+(stats[0]-15);
+			
+			System.out.println("[tr]"
+					+ "\n[td][center]"+l+"[/center][/td]"
+					+ "\n[td][center]"+babstr+"[/center][/td]"
+					+ "\n[td][center]+"+stats[1]+"[/center][/td]"
+					+ "\n[td][center]+"+stats[2]+"[/center][/td]"
+					+ "\n[td][center]+"+stats[3]+"[/center][/td]"
+					+ "\n[td][center][/center][/td]"
+					+ "\n[/tr]\n");
+		}
+		
+		System.out.println("[/table]");
+	}
+	
+	public static void setSave(int stat,String sName) {
+		String temp;
+		System.out.print("Slow or fast " + sName + " save progression?   ");
+		temp = s.nextLine();
+		if(temp.equalsIgnoreCase("slow") || temp.equalsIgnoreCase("s")) {
+			stats[stat] = 0;
+			improve[stat] = 3;
+		} else if(temp.equalsIgnoreCase("fast") || temp.equalsIgnoreCase("f")) {
+			stats[stat] = 2;
+			improve[stat] = 2;
+		}
+	}
+}
