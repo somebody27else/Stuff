@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class ClassWriter {
 	private static Scanner s = new Scanner(System.in);
-	private static int l;
+	private static String extraTitle="",extra="";
+	private static int l=1;
 	private static int[] stats = new int[4]; //BAB, fort, ref, will tracker
 	private static int[] improve = new int[4]; //rate at which the saves improve
 	private static int[] lt = {0,0,0,0}; //level tracker, DON'T CHANGE!
@@ -37,6 +38,8 @@ public class ClassWriter {
 		setSave(2,"Ref");
 		setSave(3,"Will");
 		
+		extraTitle = "\n[th][center]Max Channel[/center][/th]\n[th][center]Channel Pool[/center][/th]";
+		
 		System.out.println("\n\nPut in the table tag here!"
 				+ "\n[tr]"
 				+ "\n[th][center]Level[/center][/th]"
@@ -45,10 +48,11 @@ public class ClassWriter {
 				+ "\n[th][center]Ref[/center][/th]"
 				+ "\n[th][center]Will[/center][/th]"
 				+ "\n[th][center]Special[/center][/th]"
-				+ "\n[tr]\n");
+				+ extraTitle
+				+ "\n[/tr]\n");
 		
 		String babstr;
-		for(int l=1; l <= maxlevel; l++) {
+		for(l=1; l <= maxlevel; l++) {
 			for(int n=0; n<4; n++) {
 				lt[n]++;
 				if(lt[n]==improve[n]) {
@@ -57,7 +61,7 @@ public class ClassWriter {
 				}
 			}
 			
-			if((l-2)%3==0 && isMed) {
+			if(((l-1)%4==0) && isMed) {
 				stats[0]--;
 			}
 			
@@ -70,6 +74,8 @@ public class ClassWriter {
 			if(stats[0]>15)
 				babstr += "/+"+(stats[0]-15);
 			
+			setExtra();
+			
 			System.out.println("[tr]"
 					+ "\n[td][center]"+l+"[/center][/td]"
 					+ "\n[td][center]"+babstr+"[/center][/td]"
@@ -77,6 +83,7 @@ public class ClassWriter {
 					+ "\n[td][center]+"+stats[2]+"[/center][/td]"
 					+ "\n[td][center]+"+stats[3]+"[/center][/td]"
 					+ "\n[td][center][/center][/td]"
+					+ extra
 					+ "\n[/tr]\n");
 		}
 		
@@ -94,5 +101,20 @@ public class ClassWriter {
 			stats[stat] = 2;
 			improve[stat] = 2;
 		}
+	}
+	
+	public static void setExtra() {
+		/*int mC,cP;
+		
+		mC = 1;
+		cP = 1;
+		
+		mC = (l-l%4)/4+1;
+		if(l%4==0)
+			mC--;
+		cP = 1 + l - (l-l%4)/4;
+		
+		extra = "\n[td][center]"+mC+"[/center][/td]\n[td][center]"+cP+"[/center][/td]";*/
+		
 	}
 }
